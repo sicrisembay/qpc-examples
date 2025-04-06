@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="bsp" stereotype="0x02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.state-machine.com/qm/qm7.xsd"/>
+<package name="bsp" stereotype="0x02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.state-machine.com/qm/qm7.xsd">
+ <directory name=".">
+  <file name="bsp.h">
+   <text>#ifndef BSP_H_
+#define BSP_H_
+
+enum BspSignals {
+    DUMMY = Q_USER_SIG,
+
+    MAX_BSP_PUB_SIG,          // the last published signal in BSP
+};
+
+#endif /* BSP_H_ */
+</text>
+  </file>
+ </directory>
+</package>

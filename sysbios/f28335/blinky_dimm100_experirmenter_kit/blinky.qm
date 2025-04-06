@@ -6,7 +6,7 @@
    <attribute name="stack_sto[256]" type="uint16_t" visibility="0x02" properties="0x00"/>
    <attribute name="queue_sto[16]" type="event_t" visibility="0x02" properties="0x00"/>
    <attribute name="timeEvt" type="QTimeEvt" visibility="0x02" properties="0x00"/>
-   <statechart properties="0x00">
+   <statechart properties="0x02">
     <initial target="../1">
      <action>Q_UNUSED_PAR(par);
 
@@ -19,10 +19,7 @@ QTimeEvt_armX(&amp;me-&gt;timeEvt, 500U, 500U);</action>
      </initial_glyph>
     </initial>
     <state name="off">
-     <entry>LED_off(LED_1);
-
-System_printf(&quot;OFF\r\n&quot;);
-System_flush();</entry>
+     <entry>LED_off(LED_1);</entry>
      <tran trig="TIMEOUT" target="../../2">
       <tran_glyph conn="22,24,3,1,33,11,-2">
        <action box="0,-2,10,2"/>
@@ -33,10 +30,7 @@ System_flush();</entry>
      </state_glyph>
     </state>
     <state name="on">
-     <entry>LED_on(LED_1);
-
-System_printf(&quot;ON\r\n&quot;);
-System_flush();</entry>
+     <entry>LED_on(LED_1);</entry>
      <tran trig="TIMEOUT" target="../../1">
       <tran_glyph conn="22,40,3,1,35,-19,-4">
        <action box="0,-2,10,2"/>
@@ -73,8 +67,10 @@ QACTIVE_START(&amp;me-&gt;super,
     <text>#ifndef BLINKY_H_
 #define BLINKY_H_
 
+#include &quot;bsp.h&quot;
+
 enum BlinkySignals {
-    DUMMY_SIG = Q_USER_SIG,
+    DUMMY_SIG = MAX_BSP_PUB_SIG,
     MAX_PUB_SIG,          // the last published signal
 
     TIMEOUT_SIG,
@@ -88,6 +84,7 @@ $declare(Blinky::AO_Blinky)
    </file>
    <file name="blinky.c">
     <text>#include &quot;qpc.h&quot;
+#include &quot;bsp.h&quot;
 #include &quot;blinky.h&quot;
 #include &quot;led.h&quot;
 #include &quot;xdc/runtime/System.h&quot;
@@ -105,5 +102,5 @@ $define(Blinky::Blinky)
    </file>
   </directory>
  </package>
- <extern_package file="../bsp/bsp.qmp"/>
+ <extern_package file="./../bsp/bsp.qmp"/>
 </model>

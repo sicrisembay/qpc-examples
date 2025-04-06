@@ -36,6 +36,7 @@
 //
 //$endhead${Blinky::.::blinky.c} ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #include "qpc.h"
+#include "bsp.h"
 #include "blinky.h"
 #include "led.h"
 #include "xdc/runtime/System.h"
@@ -107,6 +108,10 @@ static QState Blinky_initial(Blinky * const me, void const * const par) {
 
     // arm the time event to expire in half a second and every half second
     QTimeEvt_armX(&me->timeEvt, 500U, 500U);
+
+    QS_FUN_DICTIONARY(&Blinky_off);
+    QS_FUN_DICTIONARY(&Blinky_on);
+
     return Q_TRAN(&Blinky_off);
 }
 
@@ -117,9 +122,6 @@ static QState Blinky_off(Blinky * const me, QEvt const * const e) {
         //${Blinky::Blinky::SM::off}
         case Q_ENTRY_SIG: {
             LED_off(LED_1);
-
-            System_printf("OFF\r\n");
-            System_flush();
             status_ = Q_HANDLED();
             break;
         }
@@ -143,9 +145,6 @@ static QState Blinky_on(Blinky * const me, QEvt const * const e) {
         //${Blinky::Blinky::SM::on}
         case Q_ENTRY_SIG: {
             LED_on(LED_1);
-
-            System_printf("ON\r\n");
-            System_flush();
             status_ = Q_HANDLED();
             break;
         }
